@@ -1670,7 +1670,7 @@ class SectorPanel(QWidget):
         self._resonance_worker = None
         self.alert_center = None  # injected by MainWindow
 
-        # P0-A：显示模式 + 自选清单（持久化于 ~/.aldebaran/ui_config.json）
+        # 显示模式 + 自选清单（持久化于 ~/.aldebaran/ui_config.json）
         cfg = load_ui_config()
         self.display_mode = cfg.get('sector_display_mode', DISPLAY_MODE_FOCUS)
         if self.display_mode not in dict(_DISPLAY_MODE_LABELS):
@@ -1699,7 +1699,7 @@ class SectorPanel(QWidget):
         self.kind_combo.currentIndexChanged.connect(self._on_kind_changed)
         toolbar.addWidget(self.kind_combo)
 
-        # P0-A：显示模式 + 自选编辑
+        # 显示模式 + 自选编辑
         display_label = QLabel('显示')
         display_label.setStyleSheet(f'color: {MUTED}; font-size: 12px;')
         toolbar.addWidget(display_label)

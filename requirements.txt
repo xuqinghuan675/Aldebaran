@@ -6,7 +6,7 @@ pandas>=2.0
 requests>=2.28
 feedparser>=6.0
 mootdx>=0.10
-TA-Lib==0.6.4
+TA-Lib==0.6.8
 openpyxl>=3.1
 python-docx>=1.1
 pdfplumber>=0.11

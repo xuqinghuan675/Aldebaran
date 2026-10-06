@@ -1751,8 +1751,8 @@ class StockPanel(QWidget):
         self.period_combo.currentTextChanged.connect(self._on_period_changed)
         top.addWidget(self.period_combo)
 
-        # 更新 ETF 数据库：配置 TickFlow key 后显示。
-        # 一键优先用 TickFlow（失败时走免费兜底）把当天行情就地写进所选 xlsm。
+        # 更新 ETF 数据库：配置 TickFlow key 或演示码时显示。
+        # 一键优先用 TickFlow（演示码/失败时走免费兜底）把当天行情就地写进所选 xlsm。
         self._etf_update_btn = QPushButton('📊 更新 ETF 数据库', self)
         self._etf_update_btn.setFixedHeight(28)
         self._etf_update_btn.setToolTip(
@@ -1841,7 +1841,7 @@ class StockPanel(QWidget):
             self._etf_update_btn.setVisible(False)
 
     def _on_update_etf_files(self):
-        """多选客户的 xlsm，后台优先用 TickFlow、失败走免费兜底刷新实时数据格。"""
+        """多选待更新的 xlsm，后台优先用 TickFlow、失败走免费兜底刷新实时数据格。"""
         paths, _ = QFileDialog.getOpenFileNames(
             self, '选择要更新的 ETF 数据文件（可多选）',
             '', 'Excel 启用宏工作簿 (*.xlsm)',
