@@ -2850,7 +2850,7 @@ def _group_performance(tasks: list[dict], key_func) -> dict:
             if rc:
                 problem_counts[rc] = problem_counts.get(rc, 0) + 1
         typical = [k for k, _v in sorted(problem_counts.items(), key=lambda x: -x[1])[:3]]
-        # 盈亏比/期望值（与 tools/_backtest_dipbuy.py 同口径，按 r_multiple）
+        # 盈亏比/期望值（按 r_multiple）
         _rv = [r for r in (_float_or_none(_detail(t).get('r_multiple')) for t in closed) if r is not None]
         _wins = [r for r in _rv if r > 0]
         _losses = [abs(r) for r in _rv if r < 0]
@@ -3997,7 +3997,7 @@ def export_predictions_rich(
         "records": [...]    # _EXPORT_FIELDS 记录列表
       }
 
-    这是客户导出时用的接口 — 记录 + 统计一起给出，买方一目了然。
+    这是导出接口：记录与统计一起返回，便于外部消费。
     """
     records = export_predictions(source=source, status=status)
     tasks = load_tasks()

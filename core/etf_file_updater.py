@@ -1,10 +1,10 @@
-"""TickFlow 一键刷新客户两个 xlsm 的「实时数据」单元格（就地改，保宏/按钮/公式）。
+"""TickFlow 一键刷新所选 xlsm 的「实时数据」单元格（就地改，保宏/按钮/公式）。
 
 实现方式：**zip/XML 外科手术**——只重写目标 worksheet 的 XML 单元格，其余所有
 部件（drawings/按钮、vbaProject、printerSettings、其它 sheet…）原样字节拷贝。
-不能用 openpyxl 保存，因为它会丢弃 xl/drawings（即客户的「日更新」按钮）。
+不能用 openpyxl 保存，因为它会丢弃 xl/drawings（包括工作簿内嵌的「日更新」按钮）。
 
-只写客户指定的实时数据格，其余一律不动：
+只写目标工作簿的实时数据格，其余一律不动：
   - 文件 B（含「实时数据」sheet, 如 etf_historical_dataX.xlsm）：
       A日期 B开盘 C收盘 D最高 E最低 F成交量 G成交额 I涨跌幅 J涨跌额 O前收盘
       （H振幅 / K换手率 保留公式让 Excel 自己算；L代码/M名称/N板块/P份额 不动）
@@ -231,7 +231,7 @@ def _cells_for_row(kind: str, r: int, q: dict) -> dict:
 
 
 def _surgical_write(path, sheet, kind, rows, qmap) -> tuple[int, int]:
-    # 客户文件常带「只读」属性，就地写入前先清掉只读位
+    # 部分工作簿可能带「只读」属性，就地写入前先清掉只读位
     try:
         os.chmod(path, os.stat(path).st_mode | stat.S_IWRITE)
     except Exception:

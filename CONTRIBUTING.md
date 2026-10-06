@@ -30,6 +30,7 @@ python tools/_test_credentials.py
 python tools/_test_runtime_paths.py
 python tools/_test_release_hardening.py
 python tools/_test_scrapling_runtime.py
+python tools/_test_runtime_stability_packaging.py
 ~~~
 
 Changes touching a specific subsystem should also run its nearby _test_*.py files.

@@ -27,12 +27,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: "pip"
 
-      - name: Install smoke-test dependencies
+      - name: Install dependencies
         shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          python -m pip install "numpy>=2.0,<2.3" "pandas>=2.0"
+          python -m pip install -r requirements.txt
+
+      - name: Import runtime dependencies
+        shell: pwsh
+        run: |
+          python -c "import PySide6, akshare, pandas, numpy, requests, feedparser, mootdx, talib, openpyxl, docx, pdfplumber; import core.paths; import ui.evidence_graph_view; print('runtime imports ok')"
 
       - name: Compile source
         shell: pwsh
@@ -46,3 +52,4 @@ jobs:
           python tools/_test_runtime_paths.py
           python tools/_test_release_hardening.py
           python tools/_test_scrapling_runtime.py
+          python tools/_test_runtime_stability_packaging.py

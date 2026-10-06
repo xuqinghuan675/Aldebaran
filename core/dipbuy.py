@@ -4,7 +4,7 @@
   · 纯函数：只看个股日 K，不接 market_phase / flow / bench / RS（情绪降级在 predictor 约束层做，
     避免 technical_profile 缓存与最新情绪打架）。
   · 与 build_technical_profile 同口径：MA/量比/支撑/K 线形态公式与 kline_provider 一致，
-    生产（build_technical_profile）与回测（tools/_backtest_dipbuy.py）共用本函数，杜绝逻辑漂移。
+    build_technical_profile 与其他调用方共用本函数，避免逻辑漂移。
   · 价位为「支撑系」：entry≈close（企稳即买），stop=回调低点/ATR，target=2:1 构造，
     永不使用阻力位 entry。
 """

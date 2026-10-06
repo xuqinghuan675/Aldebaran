@@ -1683,7 +1683,7 @@ class _WatchlistPnlCalendarWidget(QWidget):
 
 
 class _EtfFileUpdateWorker(QThread):
-    """后台就地刷新客户 xlsm 的实时数据格，避免大文件卡 UI。"""
+    """后台就地刷新所选 xlsm 的实时数据格，避免大文件卡 UI。"""
     finished = Signal(dict)
 
     def __init__(self, paths: list[str], parent=None):
@@ -1751,8 +1751,8 @@ class StockPanel(QWidget):
         self.period_combo.currentTextChanged.connect(self._on_period_changed)
         top.addWidget(self.period_combo)
 
-        # 更新 ETF 数据库：配置 TickFlow key 或演示码时显示。
-        # 一键优先用 TickFlow（演示码/失败时走免费兜底）把当天行情就地写进客户的 xlsm。
+        # 更新 ETF 数据库：配置 TickFlow key 后显示。
+        # 一键优先用 TickFlow（失败时走免费兜底）把当天行情就地写进所选 xlsm。
         self._etf_update_btn = QPushButton('📊 更新 ETF 数据库', self)
         self._etf_update_btn.setFixedHeight(28)
         self._etf_update_btn.setToolTip(
