@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / local agent state
+.idea/
+.vscode/
+.agents/
+.claude/
+.codex/
+.codebase-memory/
+AGENTS.md
+CLAUDE.md
+
+# Build artifacts
+build/
+dist/
+dist-build/
+*.spec
+*.build/
+*.dist/
+*.onefile-build/
+nuitka-crash-report.xml
+
+# Logs / caches / runtime state
+*.log
+cache/
+logs/
+AldebaranData/
+.aldebaran/
+.tmp_docx_render/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+data/*
+!data/intel_config.example.json
+
+# User / customer / exported datasets
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.pkl
+*.jsonl
+*.docx
+*.pdf
+*.zip
+*.7z
+*.rar
+exports/
+private/
+internal/
+local-docs/
+_audit_out/
+plan/
+reference_repos/
+
+# OS
+.DS_Store
+Thumbs.db

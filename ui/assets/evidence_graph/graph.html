@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aldebaran EvidenceGraph</title>
+  <link rel="stylesheet" href="./graph_style.css" />
+</head>
+<body>
+  <div id="graph"></div>
+  <div id="hud">
+    <div id="subject">EvidenceGraph</div>
+    <div id="meta">等待图谱数据</div>
+  </div>
+  <div id="tooltip"></div>
+  <div id="fallback">3D 图谱资源未加载，已在应用内切换轻量图谱时可继续使用。</div>
+
+  <script src="./vendor/three.min.js"></script>
+  <script src="./vendor/3d-force-graph.min.js"></script>
+  <script src="./graph_bridge.js"></script>
+</body>
+</html>

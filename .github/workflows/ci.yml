@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.11"
+          - "3.12"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install smoke-test dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "numpy>=2.0,<2.3" "pandas>=2.0"
+
+      - name: Compile source
+        shell: pwsh
+        run: python -m compileall -q app.py core ui tools
+
+      - name: Run release smoke tests
+        shell: pwsh
+        run: |
+          python tools/_test_mytt_cleanroom.py
+          python tools/_test_credentials.py
+          python tools/_test_runtime_paths.py
+          python tools/_test_release_hardening.py
+          python tools/_test_scrapling_runtime.py
