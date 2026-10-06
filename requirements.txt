@@ -4,7 +4,7 @@ numpy>=2.0,<2.3
 akshare==1.18.60
 pandas>=2.0
 requests>=2.28
-feedparser>=6.0
+feedparser>=6.0.14
 mootdx>=0.10
 TA-Lib==0.6.8
 openpyxl>=3.1
