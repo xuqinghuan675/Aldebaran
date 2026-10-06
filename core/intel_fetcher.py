@@ -1458,9 +1458,10 @@ def _build_analysis_prompt(
         zdt = emotion.get('zdt') or emotion.get('\u5f00\u677f', 'N/A')
         amt = emotion.get('amount')
         amt_str = f"{amt / 1e12:.2f}\u4e07\u4ebf" if amt else 'N/A'
+        zdt_part = f' / \u5f00\u677f {zdt}\u5bb6' if zdt != 'N/A' else ''
         parts.append(
             f'\u25b6 \u5927\u76d8\u60c5\u7eea\uff1a\u6da8\u505c {zt}\u5bb6 / \u8dcc\u505c {dt}\u5bb6'
-            f'{(f" / \u5f00\u677f {zdt}\u5bb6") if zdt != "N/A" else ""}'
+            f'{zdt_part}'
             f'\uff0c\u4e24\u5e02\u6210\u4ea4\u989d {amt_str}'
         )
     else:
@@ -1532,9 +1533,10 @@ def _build_index_analysis_prompt(
         zdt = emotion.get('zdt') or emotion.get('\u5f00\u677f', 'N/A')
         amt = emotion.get('amount')
         amt_str = f"{amt / 1e12:.2f}\u4e07\u4ebf" if amt else 'N/A'
+        zdt_part = f' / \u5f00\u677f {zdt}\u5bb6' if zdt != 'N/A' else ''
         parts.append(
             f'\u25b6 \u5e02\u573612\u6708\u60c5\u7eea\uff1a\u6da8\u505c {zt}\u5bb6 / \u8dcc\u505c {dt}\u5bb6'
-            f'{(f" / \u5f00\u677f {zdt}\u5bb6") if zdt != "N/A" else ""}'
+            f'{zdt_part}'
             f'\uff0c\u4e24\u5e02\u6210\u4ea4\u989d {amt_str}'
         )
     else:
