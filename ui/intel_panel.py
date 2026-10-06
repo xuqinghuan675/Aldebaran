@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QPushButton,
     QScrollArea, QFrame, QSplitter, QSizePolicy, QButtonGroup,
     QInputDialog, QLineEdit, QMessageBox,
-    QDialog, QApplication,
+    QDialog, QApplication, QPlainTextEdit,
 )
 from PySide6.QtCore import Qt, Signal, QThread
 

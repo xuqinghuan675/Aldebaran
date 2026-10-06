@@ -336,7 +336,7 @@ class MainWindow(QMainWindow):
         self._closing = False
 
     def _install_watermark(self, toolbar):
-        self._watermark = QLabel('清欢出版')
+        self._watermark = QLabel('Aldebaran')
         self._watermark.setObjectName('toolbarWatermark')
         self._watermark.setMaximumHeight(34)
         self._watermark.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)

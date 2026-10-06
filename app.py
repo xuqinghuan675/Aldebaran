@@ -7,7 +7,8 @@ import types
 # 其他包（scipy/pyarrow/curl_cffi 等）由 Nuitka 正常编译打入，无需空壳。
 if 'py_mini_racer' not in sys.modules:
     try:
-        import py_mini_racer as _pmr  # noqa: F401（源码环境直接用真实包）
+        import py_mini_racer as _pmr  # noqa: F401
+        # 源码环境直接使用真实包。
     except (ImportError, ModuleNotFoundError):
         _pmr_stub = types.ModuleType('py_mini_racer')
         _pmr_stub.__aldebaran_stubbed__ = True

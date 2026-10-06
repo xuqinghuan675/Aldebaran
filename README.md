@@ -28,7 +28,7 @@ Aldebaran 是一个基于 **Python + PySide6** 的 A 股市场分析、情报聚
 - **情报处理**：新闻、公告、公开网页信息的采集、分类、证据组织和 AI 分析接口。
 - **追踪与复盘**：观察任务、命中情况、结果结算、评分和复盘改进。
 - **本地数据隔离**：运行时数据默认写入用户目录，不写入 Git 仓库。
-- **凭据管理**：API Key 通过环境变量或本地安全配置提供。
+- **凭据管理**：优先通过环境变量提供 API Key；Windows 可选启用 DPAPI 本地加密存储。
 - **测试与打包**：确定性测试、GitHub Actions smoke CI 与 Nuitka 构建脚本。
 
 ## 仓库结构
@@ -74,7 +74,7 @@ Windows 也可以直接运行 launch.bat。
 | ALDEBARAN_BUILD_DIR | 自定义 Nuitka 构建输出目录 |
 | ALDEBARAN_BUILD_JOBS | Nuitka 构建并行数；未设置时使用主机逻辑 CPU 数 |
 
-不要把真实 Key 写进仓库。文件配置应以 data/intel_config.example.json 为模板，并保持真实配置被 .gitignore 排除。
+不要把真实 Key 写进仓库。文件配置应以 data/intel_config.example.json 为模板，并保持真实配置被 .gitignore 排除。若使用本地 JSON 保存凭据，未启用 DPAPI 安全模式时凭据会以明文写入用户数据目录；共享、备份或上传该目录前应先移除凭据。
 
 ## 运行时数据
 
@@ -106,6 +106,7 @@ python tools/_test_credentials.py
 python tools/_test_runtime_paths.py
 python tools/_test_release_hardening.py
 python tools/_test_scrapling_runtime.py
+python tools/_test_runtime_stability_packaging.py
 ~~~
 
 GitHub Actions 会在 main push 和 Pull Request 上使用 Python 3.11 / 3.12 安装完整 requirements、执行运行时导入检查、基础语法检查与上述 smoke tests。完整桌面交互仍建议在 Windows 环境验证。

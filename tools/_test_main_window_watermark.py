@@ -26,7 +26,7 @@ class MainWindowWatermarkTest(unittest.TestCase):
 
         self.assertIsInstance(win._watermark, QLabel)
         self.assertIs(win._watermark.parentWidget(), toolbar_host)
-        self.assertEqual('清欢出版', win._watermark.text())
+        self.assertEqual('Aldebaran', win._watermark.text())
         self.assertTrue(
             win._watermark.testAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         )

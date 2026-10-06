@@ -56,10 +56,12 @@ def _dipbuy_near_breakout_df() -> pd.DataFrame:
 def test_technical_profile_keeps_secondary_setup():
     profile = build_technical_profile('000001', df=_dipbuy_near_breakout_df())
     _assert(profile['setup_name'] == 'pullback_buy', 'technical profile primary setup is dipbuy')
-    _assert(profile['secondary_setups'] == ['trend_breakout'],
-            'technical profile keeps near-breakout as secondary setup')
+    _assert(profile['secondary_setups'] == ['trend_continuation', 'trend_breakout'],
+            'technical profile keeps all secondary setups in priority order')
     _assert(
-        [x['setup_name'] for x in profile['setup_candidates']] == ['pullback_buy', 'trend_breakout'],
+        [x['setup_name'] for x in profile['setup_candidates']] == [
+            'pullback_buy', 'trend_continuation', 'trend_breakout'
+        ],
         'technical profile exposes ordered setup candidates',
     )
 
