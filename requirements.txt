@@ -1,12 +1,12 @@
 PySide6==6.10.2
-matplotlib>=3.7
+matplotlib>=3.11.2
 numpy>=2.0,<2.3
 akshare==1.18.60
 pandas>=2.0
 requests>=2.28
 feedparser>=6.0.14
-mootdx>=0.10
+mootdx>=0.11.7
 TA-Lib==0.6.8
-openpyxl>=3.1
+openpyxl>=3.1.5
 python-docx>=1.1
 pdfplumber>=0.11

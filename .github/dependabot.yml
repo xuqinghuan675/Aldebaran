@@ -5,6 +5,9 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    # PySide6 is intentionally pinned; packaging stability tests enforce this runtime.
+    ignore:
+      - dependency-name: "PySide6"
 
   - package-ecosystem: "github-actions"
     directory: "/"
