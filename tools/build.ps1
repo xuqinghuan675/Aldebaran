@@ -16,6 +16,14 @@ $PY = "python"
 $RequiredPySide = "6.10.2"
 $RequiredQtPrefix = "6.10."
 $RequiredAkShare = "1.18.60"
+$BuildJobs = [Environment]::ProcessorCount
+if ($env:ALDEBARAN_BUILD_JOBS) {
+    $parsedBuildJobs = 0
+    if ((-not [int]::TryParse($env:ALDEBARAN_BUILD_JOBS, [ref]$parsedBuildJobs)) -or $parsedBuildJobs -lt 1) {
+        throw "ALDEBARAN_BUILD_JOBS must be a positive integer."
+    }
+    $BuildJobs = $parsedBuildJobs
+}
 $LOCK_FILE = "$DIST\build.lock"
 $PdfplumberAvailable = $false
 $env:QT_API = "pyside6"
@@ -131,6 +139,9 @@ try {
 
     Assert-FileExists "$APP_ROOT\app_icon.ico" "Missing required build resource"
     Assert-FileExists "$APP_ROOT\app_icon.jpg" "Missing required build resource"
+    Assert-FileExists "$APP_ROOT\LICENSE" "Missing required build resource"
+    Assert-FileExists "$APP_ROOT\THIRD_PARTY_NOTICES.md" "Missing required build resource"
+    Assert-DirectoryExists "$APP_ROOT\ui\assets\evidence_graph" "Missing required build resource"
 
     # ---- prepare clean data dir ----
     Write-Host "[3/4] Preparing data files ..." -ForegroundColor Cyan
@@ -198,6 +209,7 @@ try {
         "--windows-icon-from-ico=$APP_ROOT\app_icon.ico",
         "--include-data-file=$APP_ROOT\app_icon.jpg=app_icon.jpg",
         "--include-data-dir=$CLEAN_DATA=data",
+        "--include-data-dir=$APP_ROOT\ui\assets=ui/assets",
         "--include-package-data=akshare",
         "--include-package-data=certifi",
         "--include-package-data=charset_normalizer",
@@ -218,8 +230,8 @@ try {
         "--nofollow-import-to=llvmlite",
         "--include-windows-runtime-dlls=yes",
         "--no-deployment-flag=excluded-module-usage",
-        # 用户显式要求本轮拉满：使用全部 32 个逻辑线程进行 C/SCons 编译。
-        "--jobs=32",
+        # 默认按主机逻辑 CPU 数并行；可用 ALDEBARAN_BUILD_JOBS 显式覆盖。
+        "--jobs=$BuildJobs",
         # standalone 需 Dependency Walker 分析 DLL 依赖，缓存缺失时会交互询问下载，
         # 非交互/脚本环境会卡死或退出。自动同意下载，永不卡提示。
         "--assume-yes-for-downloads",
@@ -257,6 +269,11 @@ try {
         Move-Item -LiteralPath $onefileExe -Destination $REL -Force -ErrorAction Stop
         Assert-FileExists "$REL\Aldebaran.exe" "Missing release output"
     }
+
+    Copy-Item -LiteralPath "$APP_ROOT\LICENSE" -Destination "$REL\LICENSE" -Force
+    Copy-Item -LiteralPath "$APP_ROOT\THIRD_PARTY_NOTICES.md" -Destination "$REL\THIRD_PARTY_NOTICES.md" -Force
+    Assert-FileExists "$REL\LICENSE" "Missing release license"
+    Assert-FileExists "$REL\THIRD_PARTY_NOTICES.md" "Missing release third-party notices"
 
     $zipPath = "$DIST\$relName.zip"
     if (Test-Path -LiteralPath $zipPath) {

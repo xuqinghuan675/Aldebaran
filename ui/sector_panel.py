@@ -136,10 +136,9 @@ _DISPLAY_MODE_LABELS = (
     (DISPLAY_MODE_CUSTOM, '自选'),
 )
 
-# ---------- 预置细分概念清单（P0-A 客户反馈⑨）----------
-# ⚠️ 名称需与东财概念板块库实际命名对齐：
-#   - 部分名称可能与东财不一致，请运行 tools/dump_sector_names.py 校准
-#   - 不匹配时通过 _match_existing_sector 模糊匹配兜底（startswith / substring）
+# ---------- 预置细分概念清单 ----------
+# ⚠️ 名称需与东财概念板块库实际命名对齐；上游命名变化时，
+#   _match_existing_sector 会用 startswith / substring 做兼容匹配。
 #   - 该清单仅用于「自选」对话框默认勾选项与可选项快捷入口
 _PRESET_CONCEPT_LIST = (
     # 算力链
@@ -1468,7 +1467,7 @@ class Top5Dialog(QDialog):
             self._table.setCellWidget(i, 5, btn_wrap)
 
 
-# ---------- 自选板块编辑对话框（P0-A）----------
+# ---------- 自选板块编辑对话框 ----------
 class _CustomSectorDialog(QDialog):
     """让用户从预置清单勾选自选板块，也可手动输入任意板块名。"""
 

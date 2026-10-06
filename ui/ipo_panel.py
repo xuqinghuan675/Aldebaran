@@ -402,7 +402,7 @@ class IpoPanel(QWidget):
         title.setStyleSheet('color: #ffffff; font-size: 18px; font-weight: bold;')
         root.addWidget(title)
 
-        # ---- 顶区：今日 / 近期可申购（P0-C）----
+        # ---- 顶区：今日 / 近期可申购 ----
         purchasable_widget = QWidget()
         purchasable_layout = QVBoxLayout(purchasable_widget)
         purchasable_layout.setContentsMargins(0, 0, 0, 0)

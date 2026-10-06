@@ -37,6 +37,17 @@ class BuildResourceHardeningTest(unittest.TestCase):
         self.assertNotIn('"intel_config.json") | ForEach-Object', build)
 
 
+    def test_build_packages_graph_assets_notices_and_uses_portable_parallelism(self):
+        build = (ROOT / 'tools' / 'build.ps1').read_text(encoding='utf-8-sig')
+        self.assertIn('"--include-data-dir=$APP_ROOT\\ui\\assets=ui/assets"', build)
+        self.assertIn('Copy-Item -LiteralPath "$APP_ROOT\\LICENSE"', build)
+        self.assertIn('Copy-Item -LiteralPath "$APP_ROOT\\THIRD_PARTY_NOTICES.md"', build)
+        self.assertIn('$BuildJobs = [Environment]::ProcessorCount', build)
+        self.assertIn('ALDEBARAN_BUILD_JOBS', build)
+        self.assertIn('"--jobs=$BuildJobs"', build)
+        self.assertNotIn('"--jobs=32"', build)
+
+
 class MainWindowHardeningTest(unittest.TestCase):
     def test_stock_panel_load_failure_uses_existing_statusbar_and_warning(self):
         source = (ROOT / 'ui' / 'main_window.py').read_text(encoding='utf-8')

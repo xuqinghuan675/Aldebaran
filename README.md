@@ -72,6 +72,7 @@ Windows 也可以直接运行 launch.bat。
 | ALDEBARAN_INTELLIGENCE_CACHE_DIR | 自定义情报缓存目录 |
 | ALDEBARAN_SCRAPLING_PYTHON | 可选 Scrapling 独立环境 Python 路径 |
 | ALDEBARAN_BUILD_DIR | 自定义 Nuitka 构建输出目录 |
+| ALDEBARAN_BUILD_JOBS | Nuitka 构建并行数；未设置时使用主机逻辑 CPU 数 |
 
 不要把真实 Key 写进仓库。文件配置应以 data/intel_config.example.json 为模板，并保持真实配置被 .gitignore 排除。
 
@@ -107,13 +108,20 @@ python tools/_test_release_hardening.py
 python tools/_test_scrapling_runtime.py
 ~~~
 
-GitHub Actions 会在 main push 和 Pull Request 上运行基础语法检查与上述 smoke tests。完整桌面运行仍建议在安装了 requirements.txt 全部依赖的 Windows 环境验证。
+GitHub Actions 会在 main push 和 Pull Request 上使用 Python 3.11 / 3.12 安装完整 requirements、执行运行时导入检查、基础语法检查与上述 smoke tests。完整桌面交互仍建议在 Windows 环境验证。
 
 ## 构建
 
 ~~~powershell
 powershell -ExecutionPolicy Bypass -File tools/build.ps1
 ~~~
+
+构建脚本会显式打包 EvidenceGraph 静态资源，并把 LICENSE 与 THIRD_PARTY_NOTICES.md 放入发布目录。
+
+## 安全自动化
+
+- CodeQL 对 main、Pull Request 与定期计划执行 Python 静态安全分析；
+- Dependabot 每周检查 Python 依赖与 GitHub Actions 版本更新。
 
 ## 数据与隐私原则
 
